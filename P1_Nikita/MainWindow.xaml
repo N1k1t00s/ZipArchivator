@@ -1,0 +1,74 @@
+﻿<Window x:Class="P1_Nikita.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:P1_Nikita"
+        xmlns:control="clr-namespace:P1_Nikita.Control"
+        xmlns:io="clr-namespace:System.IO;assembly=System.Runtime"
+        xmlns:viewModel="clr-namespace:P1_Nikita.ViewModel"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1000"
+        d:DataContext="{d:DesignInstance Type=viewModel:MainViewModel, IsDesignTimeCreatable=True}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Column="0" ItemsSource="{Binding Files}" SelectedItem="{Binding SelectedFile}"
+                  Name="FilesListView">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="160" DisplayMemberBinding="{Binding Path=Name}">Имя</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Length}">Размер</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Extension}">Тип</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=LastWriteTime}">Изменён</GridViewColumn>
+                </GridView>
+            </ListView.View>
+
+        </ListView>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Margin="5 5 5 0">
+                <DockPanel LastChildFill="True">
+                    <Button DockPanel.Dock="Right" Content="..." Padding="0 0 0 0" Height="18" Width="20"
+                            HorizontalAlignment="Right"
+                            Command="{Binding SelectDirectoryDialog}"
+                            CommandParameter="{Binding SelectedPath}" />
+                    <TextBox DockPanel.Dock="Left"
+                             Text="{Binding Path=SelectedPath, UpdateSourceTrigger=PropertyChanged}" />
+                    <!-- <control:HintedTextBox DockPanel.Dock="Left" -->
+                    <!--                        Hint="Выберите путь к файлам" Text="{Binding Path=SelectedPath, UpdateSourceTrigger=PropertyChanged}" /> -->
+                </DockPanel>
+                <StackPanel>
+                    <TextBox Margin="0 5 0 0" 
+                        Text="{Binding ArchiveName}"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal"
+                            Margin="0 10 0 0">
+                    <Button Margin="0 0 10 0"
+                            Content="Открыть в проводнике"
+                            Command="{Binding OpenSelectedDirectory}"
+                            CommandParameter="{Binding SelectedPath}" />
+                    <Button Margin="0 0 10 0"
+                            Content="Архивировать" 
+                            Command="{Binding Archive}"
+                            CommandParameter="{Binding SelectedFiles}"/>
+                    <Button Margin="0 0 10 0"
+                        Content="Разархивировать"
+                        Command="{Binding UnArchive}"
+                        CommandParameter="{Binding SelectedFile}"/>
+                    <Button
+                        Content="Сброс"
+                        Command="{Binding Reset}"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="1" VerticalAlignment="Center">
+                <ContentControl Content="{Binding ArchiveInfoViewModel}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
