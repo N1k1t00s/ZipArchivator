@@ -8,7 +8,7 @@
         xmlns:io="clr-namespace:System.IO;assembly=System.Runtime"
         xmlns:viewModel="clr-namespace:P1_Nikita.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000"
+        Title="ZipArchivator" Height="600" Width="1000"
         d:DataContext="{d:DesignInstance Type=viewModel:MainViewModel, IsDesignTimeCreatable=True}">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -52,7 +52,7 @@
                     <Button Margin="0 0 10 0"
                             Content="Открыть в проводнике"
                             Command="{Binding OpenSelectedDirectory}"
-                            CommandParameter="{Binding SelectedPath}" />
+                            CommandParameter="{Binding SelectedPath}" Height="37" Width="194" />
                     <Button Margin="0 0 10 0"
                             Content="Архивировать" 
                             Command="{Binding Archive}"
